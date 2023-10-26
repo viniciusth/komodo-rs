@@ -1,4 +1,5 @@
 # Komodo - Simplifying competitive programming for the Rust language
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/viniciusth/komodo-rs/blob/master/LICENSE)
 
 Tired of having to copy-paste your library code into every solution you write? Komodo is a command-line tool that allows you to easily create, expand, run and test Rust solutions for competitive programming problems.
 
