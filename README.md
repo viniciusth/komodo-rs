@@ -7,12 +7,13 @@ This project is more of a template than an actual library. It provides useful CL
 There are some example solutions and libraries in this repository, but they are mostly for reference and testing purposes, so you should probably delete them and write your own.
 
 ## Installation
-Make sure you have Rust installed. Then, clone this repository:
+Make sure you have Rust installed. Then, clone this repository (or simply create your own repository from this template):
 ```bash
-git clone ...
+git clone https://github.com/viniciusth/komodo-rs.git
 ```
 And then you should be able to run the CLI with:
 ```bash
+cd komodo-rs
 cargo run
 ```
 
@@ -45,4 +46,4 @@ The `cargo run expand` command will expand a solution file into a submission fil
 The `cargo run code` command will run the `main` function of the solution file corresponding to the question you pass as an argument. For example, `cargo run code -q b` will run the `main` function of `src/code/b.rs`.
 
 #### Stress testing
-The `cargo run stress [-q]` command will stress test a solution with a brute force solution. It will run both solutions on random inputs and compare the results. If they are different, it will print the input and the diff of the outputs.
+The `cargo run stress [-q]` command will stress test a solution with a brute force solution. It will run both solutions on random inputs and compare the results. If they are different, it will print the input and the diff of the outputs. The brute force solution and generator files are both located in `src/code/stress/`.
