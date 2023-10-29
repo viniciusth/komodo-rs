@@ -29,7 +29,10 @@ impl FileExpand {
         root: bool,
     ) -> Result<(), Box<dyn Error + 'static>> {
         let path = path.as_ref().to_str().unwrap().to_string();
-        let f = std::fs::read_to_string(path.clone())?;
+        let f = std::fs::read_to_string(path.clone()).or_else(|_| {
+            // it could be a module file, swap for mod.rs
+            std::fs::read_to_string(path.replace(".rs", "/mod.rs"))
+        })?;
         let mut file_without_uses = String::new();
         let mut use_stmts = vec![];
         let mut adding = false;
@@ -38,6 +41,12 @@ impl FileExpand {
                 assert!(adding == false, "use statement in use statement");
                 use_stmts.push(String::new());
                 adding = true;
+            }
+            // skip module declarations
+            else if (line.starts_with("mod") || line.starts_with("pub mod"))
+                && line.ends_with(';')
+            {
+                continue;
             }
             if adding {
                 use_stmts.last_mut().unwrap().push_str(line);

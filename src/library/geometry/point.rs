@@ -17,6 +17,17 @@ pub trait PointType:
 {
 }
 
+impl<T> PointType for T where
+    T: Copy
+        + Add<Output = Self>
+        + Sub<Output = Self>
+        + Neg<Output = Self>
+        + Default
+        + PartialOrd
+        + Mul<Output = Self>
+{
+}
+
 impl<T> Point<T>
 where
     T: PointType,
@@ -106,12 +117,6 @@ impl<T: Sub<Output = T>> Sub for Point<T> {
         }
     }
 }
-
-impl PointType for i32 {}
-impl PointType for i64 {}
-impl PointType for i128 {}
-impl PointType for f64 {}
-impl PointType for f32 {}
 
 pub fn partial_cmp<T: PartialOrd>(a: &T, b: &T) -> std::cmp::Ordering {
     a.partial_cmp(&b).unwrap()
