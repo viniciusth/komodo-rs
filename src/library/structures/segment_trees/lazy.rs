@@ -1,29 +1,28 @@
 use crate::library::structures::segment_trees::LazyNode;
 
-pub struct LazySegmentTree<T, N: LazyNode<T>> {
+pub struct LazySegmentTree<N: LazyNode> {
     n: usize,
     data: Vec<N>,
-    _t: std::marker::PhantomData<T>,
 }
 
-impl<T: Copy, N: LazyNode<T>> LazySegmentTree<T, N> {
+impl<N: LazyNode> LazySegmentTree<N> 
+where N::T: Copy {
     pub fn new(n: usize) -> Self {
         Self {
             n,
             data: vec![N::new(); 4 * n],
-            _t: std::marker::PhantomData,
         }
     }
 
-    pub fn update(&mut self, ql: usize, qr: usize, value: T) {
+    pub fn update(&mut self, ql: usize, qr: usize, value: N::T) {
         self.update_impl(1, 0, self.n - 1, ql, qr, value);
     }
 
-    pub fn query(&mut self, ql: usize, qr: usize) -> T {
+    pub fn query(&mut self, ql: usize, qr: usize) -> N::T {
         self.query_impl(1, 0, self.n - 1, ql, qr).value()
     }
 
-    fn update_impl(&mut self, node: usize, tl: usize, tr: usize, ql: usize, qr: usize, value: T) {
+    fn update_impl(&mut self, node: usize, tl: usize, tr: usize, ql: usize, qr: usize, value: N::T) {
         self.push(node, tl, tr);
         if qr < tl || tr < ql {
             return;

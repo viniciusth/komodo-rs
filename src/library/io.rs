@@ -14,6 +14,7 @@ impl<R: io::BufRead> Scanner<R> {
             buf_iter: "".split_ascii_whitespace(),
         }
     }
+
     pub fn token<T: str::FromStr>(&mut self) -> T {
         loop {
             if let Some(token) = self.buf_iter.next() {
@@ -28,6 +29,34 @@ impl<R: io::BufRead> Scanner<R> {
                 std::mem::transmute(slice.split_ascii_whitespace())
             }
         }
+    }
+
+    pub fn vec<T: str::FromStr>(&mut self, len: usize) -> Vec<T> {
+        (0..len).map(|_| self.token()).collect()
+    }
+
+    pub fn bytes(&mut self) -> Vec<u8> {
+        self.token::<String>().into_bytes()    
+    }
+
+    pub fn i32(&mut self) -> i32 {
+        self.token()
+    }
+
+    pub fn i64(&mut self) -> i64 {
+        self.token()
+    }
+
+    pub fn i128(&mut self) -> i128 {
+        self.token()
+    }
+
+    pub fn usize(&mut self) -> usize {
+        self.token()
+    }
+
+    pub fn string(&mut self) -> String {
+        self.token()
     }
 }
 
